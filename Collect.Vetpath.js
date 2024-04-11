@@ -8,6 +8,8 @@ if(!Array.prototype.indexOf){
 }
 
 
+
+
 let sCollectionTypeId = 'V'; // Vet
 let sState = 'WDP';
 let sProvider = 'www.vetpath.com.au';
@@ -184,7 +186,15 @@ function formJobReset(){
 
 	$('#collect-form-pickup-location-search, #collect-form-pickup-location').prop('disabled', false);
 	$('#collect-form-pickup-location, #collect-form-pickup-location-confirmation, #collect-form-job, #collect-form-actions').hide('blind', function(){
-		document.forms['Form'].reset();
+		$('#collect-form input[type="text"], #collect-form input[type="email"]').val("");
+        
+        // For checkboxes and radios, adjust accordingly if you have a default selection
+        $('#collect-form input[type="checkbox"], #collect-form input[type="radio"]').prop("checked", false);
+        
+        // For dropdowns, you might want to reset to the first option
+        $('#collect-form select').each(function() {
+            this.selectedIndex = 0;
+        });
 
 		$('#collect-form-specimen-location-details').prop('disabled', true);
 		$('#collect-form-job .datepicker').datepicker('setDate', null);
