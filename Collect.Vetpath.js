@@ -7,16 +7,18 @@ if(!Array.prototype.indexOf){
 	}
 }
 
+
 let sCollectionTypeId = 'V'; // Vet
 let sState = 'WDP';
 let sProvider = 'www.vetpath.com.au';
-let oCatalogue = null;
-let sWebAPIHost = window.location == undefined || window.location.hostname.indexOf('.com.au') !== -1 ? 'https://webapi.healius.com.au' : 'http://api'; // without trailing slash!
-let sJobURL = sWebAPIHost + '/collect/jobs/?c=wdp';
-let sCatalogueURL = sWebAPIHost + '/collect/catalogue/?c=wdp';
-let sLocationSearchURL = sWebAPIHost + '/collect/search/?c=wdp';
-let initialized = false;
-let oFound;
+var oCatalogue = null;
+// var sWebAPIHost = window.location == undefined || window.location.hostname.indexOf('.com.au') !== -1 ? 'https://webapi.healius.com.au' : 'http://api'; // without trailing slash!
+var sWebAPIHost = 'https://webapi.healius.com.au';
+var sJobURL = sWebAPIHost + '/collect/jobs/?c=wdp';
+var sCatalogueURL = sWebAPIHost + '/collect/catalogue/?c=wdp';
+var sLocationSearchURL = sWebAPIHost + '/collect/search/?c=wdp';
+var initialized = false;
+var oFound;
 
 catalogueLoad();
 
@@ -150,6 +152,23 @@ function init(){
 			formJobReset();
 		})
 	;
+
+	$('#collect-search-reset').click(function(event) {
+		event.preventDefault();
+
+		$('#collect-form-pickup-location-confirm').prop( "checked", false );
+
+		$('#collect-form-pickup-location-check').button('option', 'disabled', false)
+		$('#collect-form-submit').button('option', 'disabled', true);
+		$('#collect-form-pickup-location, #collect-form-pickup-location-search').prop('disabled', false);
+		$('#collect-form-job').prop('disabled', true).hide('fade');
+		$('#collect-form-actions').prop('disabled', true).hide('fade');
+
+		$('#collect-form-pickup-location, #collect-form-pickup-location-confirmation, #collect-form-job, #collect-form-actions').hide();
+		$('#collect-form-code').val('').focus();
+
+		enabledDisablePickupLocationCheckButton();
+	});
 
 	enabledDisablePickupLocationCheckButton();
 
